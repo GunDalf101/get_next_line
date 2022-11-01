@@ -6,32 +6,11 @@
 /*   By: mbennani <mbennani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 06:04:29 by mbennani          #+#    #+#             */
-/*   Updated: 2022/10/25 21:56:48 by mbennani         ###   ########.fr       */
+/*   Updated: 2022/10/31 05:30:12 by mbennani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	buff_read(int fd, t_list **buffer, int *redp)
-{
-	char	*buff;
-
-	while (!find_nline(*buffer) && *redp != 0)
-	{
-		buff = malloc ((BUFFER_SIZE + 1) * sizeof(char));
-		if (!buff)
-			return ;
-		*redp = (int)read(fd, buff, BUFFER_SIZE);
-		if ((!*buffer && !*redp) || *redp == -1)
-		{
-			free(buff);
-			return ;
-		}
-		buff[*redp] = '\0';
-		buff_add(buffer, buff, *redp);
-		free (buff);
-	}
-}
 
 void	buff_add(t_list **buffer, char *buff, int red)
 {
@@ -60,6 +39,27 @@ void	buff_add(t_list **buffer, char *buff, int red)
 	}
 	last = ft_lstlast(*buffer);
 	last->next = new;
+}
+
+void	buff_read(int fd, t_list **buffer, int *redp)
+{
+	char	*buff;
+
+	while (!find_nline(*buffer) && *redp != 0)
+	{
+		buff = malloc ((BUFFER_SIZE + 1) * sizeof(char));
+		if (!buff)
+			return ;
+		*redp = (int)read(fd, buff, BUFFER_SIZE);
+		if ((!*buffer && !*redp) || *redp == -1)
+		{
+			free(buff);
+			return ;
+		}
+		buff[*redp] = '\0';
+		buff_add(buffer, buff, *redp);
+		free (buff);
+	}
 }
 
 void	ext_line(t_list *buffer, char **line)
@@ -109,7 +109,7 @@ void	buff_clear(t_list **buffer)
 		i++;
 	clean_node->content = malloc(((ft_strlen(last->content) - i) + 1));
 	if (clean_node->content == NULL)
-		return ;
+		return (free(clean_node));
 	j = 0;
 	while (last->content[i])
 		clean_node->content[j++] = last->content[i++];

@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbennani <mbennani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 06:04:33 by mbennani          #+#    #+#             */
-/*   Updated: 2022/10/27 03:25:40 by mbennani         ###   ########.fr       */
+/*   Updated: 2022/10/31 05:25:00 by mbennani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <string.h>
 # include <stdlib.h>
-# include <stdio.h>
+# include <unistd.h>
+# include <stddef.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}				t_list;
+# ifndef FD_MAX
+#  define FD_MAX 10240
+# endif
 
 char	*get_next_line(int fd);
-int		find_nline(t_list *buffer);
-t_list	*ft_lstlast(t_list *buffer);
-void	line_alloc(char **line, t_list *buffer);
-void	buff_free(t_list *buffer);
-int		ft_strlen(const char *str);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlcpy(char *dest, const char *src, size_t destsize);
+size_t	ft_strlen(const char *s);
 
 #endif
